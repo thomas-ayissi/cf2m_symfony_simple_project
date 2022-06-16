@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TheUsersRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -29,6 +31,14 @@ class TheUsers implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 250)]
     private $therealname;
+
+    #[ORM\OneToMany(mappedBy: 'useriduser', targetEntity: TheArticles::class)]
+    private $theArticles;
+
+    public function __construct()
+    {
+        $this->theArticles = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -134,6 +144,36 @@ class TheUsers implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTherealname(string $therealname): self
     {
         $this->therealname = $therealname;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TheArticles>
+     */
+    public function getTheArticles(): Collection
+    {
+        return $this->theArticles;
+    }
+
+    public function addTheArticle(TheArticles $theArticle): self
+    {
+        if (!$this->theArticles->contains($theArticle)) {
+            $this->theArticles[] = $theArticle;
+            $theArticle->setUseriduser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTheArticle(TheArticles $theArticle): self
+    {
+        if ($this->theArticles->removeElement($theArticle)) {
+            // set the owning side to null (unless already changed)
+            if ($theArticle->getUseriduser() === $this) {
+                $theArticle->setUseriduser(null);
+            }
+        }
 
         return $this;
     }

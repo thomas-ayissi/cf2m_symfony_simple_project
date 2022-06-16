@@ -22,6 +22,10 @@ class TheArticles
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $TheDate;
 
+    #[ORM\ManyToOne(targetEntity: TheUsers::class, inversedBy: 'theArticles')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $useriduser;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +63,18 @@ class TheArticles
     public function setTheDate(?\DateTimeInterface $TheDate): self
     {
         $this->TheDate = $TheDate;
+
+        return $this;
+    }
+
+    public function getUseriduser(): ?TheUsers
+    {
+        return $this->useriduser;
+    }
+
+    public function setUseriduser(?TheUsers $useriduser): self
+    {
+        $this->useriduser = $useriduser;
 
         return $this;
     }

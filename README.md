@@ -116,3 +116,9 @@ On va sur /login
 On peut se connecter avec util1 / util1 pour avoir le rôle ROLE_USER
 
 Dans la DB que vous pouvez importer ( `datas/simpleprojectlts-v1.sql` )
+
+## Jointure entre articles et utilisateurs
+
+        php bin/console make:entity TheArticles
+
+Puis on a choisi ManyToOne vers TheUsers
