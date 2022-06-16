@@ -80,3 +80,20 @@ Pour vérifier si on est à jour:
 Pour créer une table utilisateur (pas obligation d'être une table) avec des permissions:
 
         php bin/console make:user
+
+Voir user dans :
+
+https://symfony.com/doc/current/security.html
+
+Création de `src/Entity/TheUsers.php` et modification de `config/packages/security.yaml`
+
+On peut le modifier avant la migration avec 
+
+        php bin/console make:entity TheUsers
+
+Puis faire la migration:
+
+        php bin/console make:migration
+
+        php bin/console doctrine:migrations:migrate
+

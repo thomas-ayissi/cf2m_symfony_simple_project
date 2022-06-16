@@ -24,6 +24,12 @@ class TheUsers implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private $password;
 
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    private $themail;
+
+    #[ORM\Column(type: 'string', length: 250)]
+    private $therealname;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -106,5 +112,29 @@ class TheUsers implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getThemail(): ?string
+    {
+        return $this->themail;
+    }
+
+    public function setThemail(string $themail): self
+    {
+        $this->themail = $themail;
+
+        return $this;
+    }
+
+    public function getTherealname(): ?string
+    {
+        return $this->therealname;
+    }
+
+    public function setTherealname(string $therealname): self
+    {
+        $this->therealname = $therealname;
+
+        return $this;
     }
 }
