@@ -122,3 +122,15 @@ Dans la DB que vous pouvez importer ( `datas/simpleprojectlts-v1.sql` )
         php bin/console make:entity TheArticles
 
 Puis on a choisi ManyToOne vers TheUsers
+
+### On va bloquer l'accès au dossier admin
+
+Dans `config/packages/security.yaml` on va permettre aux admins d'accéder au dossier `admin` et `profile`, les simples utilisateurs juste au `profile`, donc inaccessibles aux utilisateurs non connectés
+
+        ...
+            # Easy way to control access for large sections of your site
+            # Note: Only the *first* access control that matches will be used
+    access_control:
+         - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/profile, roles: ROLE_ADMIN, ROLE_USER }
+        ...
