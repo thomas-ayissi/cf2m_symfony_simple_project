@@ -131,6 +131,24 @@ Dans `config/packages/security.yaml` on va permettre aux admins d'accéder au do
             # Easy way to control access for large sections of your site
             # Note: Only the *first* access control that matches will be used
     access_control:
-         - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/profile, roles: ROLE_ADMIN, ROLE_USER }
+         access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/profile, roles: [ROLE_ADMIN, ROLE_USER] }
         ...
+
+Menu, si on est identifié ou pas, USER ou ADMIN, on peut le vérifier en Twig
+
+        
+        templates/public/index.html.twig
+
+        ...
+        <li><a href="{{ path('homepage') }}">Accueil</a></li>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <li><a href="/admin">administration</a></li>
+            {% endif %}
+            <li><a href="/profile">profil</a></li>
+            <li><a href="{{ path('app_logout') }}">Logout</a></li>
+        {% else %}
+            <li><a href="{{ path('app_login') }}">Connect</a></li>
+        {% endif %}
