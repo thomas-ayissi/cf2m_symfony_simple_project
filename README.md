@@ -74,3 +74,9 @@ Pour migrer (!pertes de données possibles) :
 Pour vérifier si on est à jour:
 
         php bin/console doctrine:migrations:up-to-date
+
+## Création des utilisateurs
+
+Pour créer une table utilisateur (pas obligation d'être une table) avec des permissions:
+
+        php bin/console make:user
