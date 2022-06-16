@@ -97,3 +97,22 @@ Puis faire la migration:
 
         php bin/console doctrine:migrations:migrate
 
+## création de l'authentification
+
+        php bin/console make:auth
+
+avec login et logout
+
+### création d'un utilisateur
+
+        php bin/console security:hash-password
+
+Puis on insert dans la table the_user
+
+### connexion
+
+On va sur /login
+
+On peut se connecter avec util1 / util1 pour avoir le rôle ROLE_USER
+
+Dans la DB que vous pouvez importer ( `datas/simpleprojectlts-v1.sql` )
