@@ -10,15 +10,23 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{path('homepage')}}">Accueil</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li class="nav-item"><a href="/admin " class="nav-link">administration</a></li>
+                            {% endif %}
+                            <li class="nav-item"><a href="/profile" class="nav-link">profil</a></li>
+                            <li class="nav-item"><a href="{{ path('app_logout') }}" class="nav-link">Logout</a></li>
+                        {% else %}
+                            <li class="nav-item"><a href="{{ path('app_login') }}" class="nav-link">Connect</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
         </nav>
     {% endblock %}
-    {% block header %}
+    {% block header %}{#
         <header class="py-5">
             <div class="container px-lg-5">
                 <div class="p-4 p-lg-5 bg-light rounded-3 text-center">
@@ -30,8 +38,13 @@
                 </div>
             </div>
         </header>
+        #}
     {% endblock %}
+    <section class="pt-4">
+    <div class="container px-lg-5">
     {% block content %}{% endblock %}
+    </div>
+    </section>
     {% block footer %}
         <footer class="py-5 bg-dark">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>

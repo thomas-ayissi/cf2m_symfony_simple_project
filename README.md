@@ -203,3 +203,57 @@ Les fichiers front-end sont créés dans le dossier `public/build`
 Vous pouvez toujours rajouter des dossiers et fichiers manuellement dans `public` en cas de bug, on par facilité.
 
 La bonne pratique étant d'utiliser des CDN (Content Delivery Network) publiques (et forts utilisés), car ils sont sur des serveurs puissants et peuvent se trouver dans le cache du navigateur des utilisateurs (venant d'autres sites). Ils ne sont pas comptés dans le temps de chargement d'une page par Google.
+
+### template pour login
+
+On fait hériter `templates/security/login.html.twig` de notre template, on change le block `body` par `content`
+
+Lien bootstrap :
+
+https://getbootstrap.com/docs/5.2/forms/overview/#content
+
+Pour rester connecté (dans la base de donnée) :
+
+https://symfony.com/doc/current/security/remember_me.html
+
+Donc dans `config/packages/security.yaml`:
+
+        main:
+            # ...
+            remember_me:
+                secret:   '%kernel.secret%' # required
+                lifetime: 604800 # 1 week in seconds
+                token_provider:
+                    doctrine: true
+
+Dans `src/Security/LoginAuthenticator.php` :
+
+        ...
+        use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
+        ...
+        public function authenticate(Request $request): Passport
+    {
+        $username = $request->request->get('username', '');
+
+        $request->getSession()->set(Security::LAST_USERNAME, $username);
+
+        return new Passport(
+            new UserBadge($username),
+            new PasswordCredentials($request->request->get('password', '')),
+            [
+                new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
+                new RememberMeBadge(),
+            ]
+        );
+    }
+        
+
+Puis:
+
+        php bin/console doctrine:migrations:diff
+
+        php bin/console doctrine:migrations:migrate
+
+Et dans notre menu connecté/déconnecté `templates/public/public.template.html.twig`
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY') or is_granted('IS_AUTHENTICATED_REMEMBERED') %}

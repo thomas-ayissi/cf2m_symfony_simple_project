@@ -3,26 +3,7 @@
 {% block title %}{{ parent() }} Accueil {% endblock %}
 
 {% block content %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
 <div class="example-wrapper">
-    <h1>On en est au template !</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li><a href="{{ path('homepage') }}">Accueil</a></li>
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            {% if is_granted('ROLE_ADMIN') %}
-                <li><a href="/admin">administration</a></li>
-            {% endif %}
-            <li><a href="/profile">profil</a></li>
-            <li><a href="{{ path('app_logout') }}">Logout</a></li>
-        {% else %}
-            <li><a href="{{ path('app_login') }}">Connect</a></li>
-        {% endif %}
-    </ul>
+<h1>Accueil</h1>
 </div>
 {% endblock %}
