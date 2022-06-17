@@ -152,3 +152,31 @@ Menu, si on est identifié ou pas, USER ou ADMIN, on peut le vérifier en Twig
         {% else %}
             <li><a href="{{ path('app_login') }}">Connect</a></li>
         {% endif %}
+
+## Installation du template
+
+En utilisant le dossier `datas/template`
+
+On divise les pages dans `templates` en modifiant légèrement `templates/base.html.twig` (les premières lignes pour correspondre au thème).
+
+! Il faut laisser les blocs qui seront remplis par Webpack-Encore depuis le dossier `assets`
+
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+
+On a créé `templates/public/public.template.html.twig`, enfant de `templates/base.html.twig`, pour pouvoir y copier le code dans des blocs depuis `datas/template/index.html`
+
+Puis on liera `templates/public/index.html.twig` comme enfant de `templates/public/public.template.html.twig` et on changera le block `content`
+
+### Gestion des fichiers front-end
+
+On pourrait mettre les fichiers directement dans le dossier publique, près du contrôleur frontal, mais on va tenter d'utiliser Webpack pour le faire.
+
+Dans le dossier `assets` on va placer les fichier css et js du template
+
+On a donc 
