@@ -179,4 +179,27 @@ On pourrait mettre les fichiers directement dans le dossier publique, près du c
 
 Dans le dossier `assets` on va placer les fichier css et js du template
 
-On a donc 
+On a donc `assets/scripts.js` et `assets/styles/styles.css` en plus dans le dossier
+
+Ensuite on va les rajouter dans
+
+        assets/app.js
+        ...
+        // any CSS you import will output into a single css file (app.css in this case)
+        import './styles/app.css';
+        import './styles/styles.css';
+        
+        // start the Stimulus application
+        import './bootstrap';
+        import './scripts';
+        ...
+
+On va tenter de compiler avec un
+
+        npm run build
+
+Les fichiers front-end sont créés dans le dossier `public/build`
+
+Vous pouvez toujours rajouter des dossiers et fichiers manuellement dans `public` en cas de bug, on par facilité.
+
+La bonne pratique étant d'utiliser des CDN (Content Delivery Network) publiques (et forts utilisés), car ils sont sur des serveurs puissants et peuvent se trouver dans le cache du navigateur des utilisateurs (venant d'autres sites). Ils ne sont pas comptés dans le temps de chargement d'une page par Google.
